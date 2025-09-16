@@ -9,7 +9,7 @@ import Pagination from "./pagination";
 import { useSearchParams } from "next/navigation";
 
 export default function AdjustmentTransaction() {
-    const [openCreateModal, setOpenFormModal] = useState(false)
+    const [openFormModal, setOpenFormModal] = useState(false)
     const [adjustmentTransactions, setAdjustmentTransactions] = useState<AdjustmentTransactionModel[]>([])
     const [search, setSearch] = useState("")
     const [selectedData, setSelectedData] = useState<AdjustmentTransactionModel | null>()
@@ -43,7 +43,7 @@ export default function AdjustmentTransaction() {
 
     return (
         <>
-            <div className="w-[65%] mx-auto py-6">
+            <div className="lg:w-[65%] px-5 lg:px-0 mx-auto py-6">
                 <div className="flex justify-between items-center">
                     <h2 className="my-3 text-xl font-semibold">Adjustment Transactions</h2>
                     <div className="flex gap-3">
@@ -56,7 +56,7 @@ export default function AdjustmentTransaction() {
                             }} />
                         <button 
                             className="py-2 px-3 cursor-pointer bg-blue-500 text-white rounded-lg"
-                            onClick={() => setOpenFormModal(true)}>Add New</button>
+                            onClick={() => setOpenFormModal(true)}>Add</button>
                     </div>
                 </div>
                 
@@ -77,7 +77,7 @@ export default function AdjustmentTransaction() {
             </div>
 
 
-            { openCreateModal ? (
+            { openFormModal ? (
                 <ModalForm onClose={(success) => {
                     if (success) loadListAdjustmentTransaction()
                     setOpenFormModal(false)

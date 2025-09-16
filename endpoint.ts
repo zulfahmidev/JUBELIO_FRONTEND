@@ -7,7 +7,6 @@ export const endpoints = {
             search: string = '',
             category: string = ''
         ) => {
-            console.log(`${BASE_URL}/post?limit=${limit}&page=${page}&search=${search}&category=${category}`)
             return `${BASE_URL}/post?limit=${limit}&page=${page}&search=${search}&category=${category}`
         },
         show: (

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
     const pathname = usePathname()
     return (
-        <header className="w-[65%] mx-auto">
+        <header className="lg:w-[65%] px-5 lg:px-0 mx-auto">
           <div className="flex items-center justify-between h-16 border-b border-black/15">
             <h1 className="text-xl font-semibold">Small Store</h1>
             <nav>

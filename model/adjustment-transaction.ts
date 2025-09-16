@@ -3,6 +3,5 @@ interface AdjustmentTransactionModel {
     sku: string,
     qty: number,
     amount: number,
-    created_at: Date,
-    updatedd_at: Date,
+    created_at: Date
 }

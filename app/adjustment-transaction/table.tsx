@@ -1,8 +1,5 @@
 "use client"
 
-import { deleteAdjustmentTransaction, getListAdjustmentTransaction } from "@/service/adjustment-transaction"
-import { useEffect, useState } from "react"
-
 export default function Table({adjustmentTransactions, page, onEdit, onDelete} : {
     adjustmentTransactions: AdjustmentTransactionModel[],
     page: number,
