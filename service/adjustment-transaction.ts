@@ -71,15 +71,3 @@ export async function deleteAdjustmentTransaction(
 
     return response
 }
-
-// export async function upload(file: File) : Promise<APIResponse> {
-//     const formData = new FormData();
-//     formData.append("file", file);
-
-//     const response = await Fetch(`/upload`, {}, {
-//         method: 'POST',
-//         body: formData
-//     })
-
-//     return response
-// }
