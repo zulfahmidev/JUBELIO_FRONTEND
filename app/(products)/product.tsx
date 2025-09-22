@@ -1,10 +1,9 @@
 "use client"
 
-import { PaginatedResponse, PaginationData } from "@/http/rest"
+import { PaginatedResponse } from "@/http/rest"
 import { deleteProduct, getListProduct } from "@/service/product"
 import Image from "next/image"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import ModalForm from "./modal-form"
 
 export default function Products() {
@@ -12,29 +11,24 @@ export default function Products() {
     const [products, setProducts] = useState<ProductModel[]>([])
     const [search, setSearch] = useState("")
     const [selectedData, setSelectedData] = useState<ProductModel | null>()
-    const query = useSearchParams()
-    const [loading, setLoading] = useState(false);
-    const loaderRef = useRef<HTMLDivElement | null>(null);
     const [page, setPage] = useState(1);
 
-    async function loadListProduct(reset: boolean = false) {
-        setLoading(true);
+    const loadListProduct = useCallback(async (reset: boolean = false) => {
         const response = await getListProduct(Number(reset ? 1 : page), 10, search)
 
         if (response.status < 300) {
-            const data = response.body as PaginatedResponse<any>
+            const data = response.body as PaginatedResponse<ProductModel>
             const newProducts = data.items as ProductModel[]
             if (reset) {
                 setProducts(newProducts)
                 setPage(1)
             } else {
-                setProducts([...products, ...newProducts])
-                setPage(page+1)
+                setProducts(prev => [...prev, ...newProducts]) // pakai prev agar aman
+                setPage(prev => prev + 1)
             }
         }
+    }, [page, search])
 
-        setLoading(false);
-    }
     const dollar = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -42,7 +36,7 @@ export default function Products() {
 
     useEffect(() => {
         loadListProduct(true)
-    }, [search])
+    }, [search, loadListProduct])
     
     async function Delete(productId: number) {
         const response = await deleteProduct(productId)

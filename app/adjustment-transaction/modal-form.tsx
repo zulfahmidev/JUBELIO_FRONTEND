@@ -7,7 +7,7 @@ export default function ModalForm({onClose, data} : {
     onClose: (success: boolean) => void,
     data?: AdjustmentTransactionModel | null
 }) {
-    const [errors, setErrors] = useState<any>({})
+    const [errors, setErrors] = useState<Record<string, string>>({})
     const [failedMessage, setFailedMessage] = useState('')
 
     async function Add(event: FormEvent<HTMLFormElement>) {

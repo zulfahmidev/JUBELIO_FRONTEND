@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ModalForm from "./modal-form";
 import Table from "./table";
 import { deleteAdjustmentTransaction, getListAdjustmentTransaction } from "@/service/adjustment-transaction";
@@ -15,16 +15,17 @@ export default function AdjustmentTransaction() {
     const [selectedData, setSelectedData] = useState<AdjustmentTransactionModel | null>()
     const [pagination, setPagination] = useState<PaginationData>()
     const query = useSearchParams()
+    const page = Number(query.get("page") ?? 1)
 
-    async function loadListAdjustmentTransaction() {
-        const response = await getListAdjustmentTransaction(Number(query.get("page") ?? 1), 10, search)
+    const loadListAdjustmentTransaction = useCallback(async () => {
+        const response = await getListAdjustmentTransaction(Number(page ?? 1), 10, search)
 
         if (response.status < 300) {
-            const data = response.body as PaginatedResponse<AdjustmentTransactionModel[]>
-            setAdjustmentTransactions(response.body.items)
-            setPagination(response.body.pagination)
+            const data = response.body as PaginatedResponse<AdjustmentTransactionModel>
+            setAdjustmentTransactions(data.items)
+            setPagination(data.pagination)
         }
-    }
+    }, [search, page])
 
     async function Delete(adjustmentTransactionId: number) {
         const response = await deleteAdjustmentTransaction(adjustmentTransactionId)
@@ -39,7 +40,7 @@ export default function AdjustmentTransaction() {
 
     useEffect(() => {
         loadListAdjustmentTransaction()
-    }, [search, query.get("page")])
+    }, [search, page, loadListAdjustmentTransaction])
 
     return (
         <>

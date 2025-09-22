@@ -1,6 +1,5 @@
 "use client"
 
-import { addAdjustmentTransaction, updateAdjustmentTransaction } from "@/service/adjustment-transaction"
 import { addProduct, updateProduct } from "@/service/product"
 import { FormEvent, useState } from "react"
 
@@ -8,7 +7,7 @@ export default function ModalForm({onClose, data} : {
     onClose: (success: boolean) => void,
     data?: ProductModel | null
 }) {
-    const [errors, setErrors] = useState<any>({})
+    const [errors, setErrors] = useState<Record<string, string>>({})
     const [failedMessage, setFailedMessage] = useState('')
     const [loading, setLoading] = useState(false)
 
